@@ -7,6 +7,7 @@
 #include <QTime>
 #include <QMessageBox>
 
+const float kStep = 0.4;//0.025;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -263,11 +264,32 @@ void MainWindow::OnSearchPath2()
     algorithm.updateGoal(goal);
     std::cout<<"s_hybridAstarPlanning"<<std::endl; 
     std::vector<PathPoint> h_path = algorithm.hybridAstarPlanning();
-    
-    h_path_.clear();
-    for(int i=h_path.size()-1; i>=0; i--)
+    std::cout<<"h_path:"<<h_path.size()<<std::endl;
+
+    std::vector<PathPoint> full_path;
+    for(int i=1; i<h_path.size(); i++)
     {
-      h_path_.push_back(h_path[i]);
+        float d_gx = h_path[i].gx - h_path[i-1].gx;
+        float d_gy = h_path[i].gy - h_path[i-1].gy;
+        float len = std::sqrt(std::pow(d_gx, 2) + std::pow(d_gy, 2));
+        d_gx /= len;
+        d_gy /= len;
+        int count = len/kStep;
+        //full_path.push_back(h_path[i-1]);
+        for(int j=0; j<count; j++)
+        {
+            PathPoint tmp;
+            tmp.gx = h_path[i-1].gx + d_gx*j*kStep;
+            tmp.gy = h_path[i-1].gy + d_gy*j*kStep;
+            full_path.push_back(tmp);
+        }
+    }
+    std::cout<<"full_path:"<<full_path.size()<<std::endl;
+
+    h_path_.clear();
+    for(int i=full_path.size()-2; i>=2; i--)
+    {
+      h_path_.push_back(full_path[i]);
     }
     std::cout<<"h_path_:"<<h_path_.size()<<std::endl; 
     markPathInMazeMap2();
@@ -393,7 +415,7 @@ void MainWindow::DrawPath()
         std::cout<<"DrawPath path.size(): "<<path.size()<<std::endl;
         for(auto &p:path)
         {
-          std::cout<<" DrawPath:"<< p->x<<" "<< p->y<<std::endl;
+          //std::cout<<" DrawPath:"<< p->x<<" "<< p->y<<std::endl;
           painter.drawRect( START_X + p->x*RECT_WIDTH,START_Y + p->y*RECT_HEIGHT,RECT_WIDTH,RECT_HEIGHT);
         }
     }
@@ -411,7 +433,7 @@ void MainWindow::DrawPath2()
         std::cout<<"DrawPath h_path_.size(): "<<h_path_.size()<<std::endl;
         for(auto &p:h_path_)
         {
-          std::cout<<" DrawPath:"<< p.gx<<" "<< p.gy<<std::endl;
+          //std::cout<<" DrawPath:"<< p.gx<<" "<< p.gy<<std::endl;
           painter.drawRect( START_X + p.gx*RECT_WIDTH,START_Y + p.gy*RECT_HEIGHT,RECT_WIDTH,RECT_HEIGHT);
         }
     }

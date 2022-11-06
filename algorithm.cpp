@@ -501,7 +501,8 @@ std::vector<PathPoint>  Algorithm::hybridAstarPlanning()
             fabs(dummy.theta) / VEH_M_ALPHA + 1;
         current = dummy;
       }
-
+      if(!path.empty())
+        path.push_back(PathPoint(current.gx, current.gy, current.gtheta));
       break;
     }
 

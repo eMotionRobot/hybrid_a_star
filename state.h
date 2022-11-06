@@ -5,6 +5,7 @@
 
 struct PathPoint
 {
+  PathPoint():gx(0.0), gy(0.0), gtheta(0.0){}
   PathPoint(const int x, const int y, const int theta):gx(x), gy(y), gtheta(theta){}
   int gx;
   int gy;

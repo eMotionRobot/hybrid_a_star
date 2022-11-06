@@ -18,10 +18,13 @@
 
 **测试效果展示：**
 
-![t1](./image/test1.png)
-![t2](./image/test2.png)
-![t3](./image/test3.png)
+![t1](./image/t1.png)
+![t2](./image/t2.png)
+![t3](./image/t3.png)
 
+![test1](./image/test1.png)
+![test2](./image/test2.png)
+![test3](./image/test3.png)
 
 
 ------------------------------------------------------------------
