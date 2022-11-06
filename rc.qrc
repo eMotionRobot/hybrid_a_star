@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>image/flag.png</file>
+        <file>image/bomb.png</file>
+        <file>image/robot.png</file>
+        <file>image/goal.png</file>
+        <file>image/start.jpg</file>
+        <file>image/wall.jpg</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>image/wall.jpg</file>
+    </qresource>
+</RCC>
